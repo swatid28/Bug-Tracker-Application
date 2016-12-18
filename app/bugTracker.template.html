@@ -1,47 +1,17 @@
-<style>
-    .bugname, .stats{
-        font-size: 20pt;
-    }
-    section{
-        margin-bottom: 10px;
-    }
-    .closed{
-        color : red;
-        text-decoration: line-through;
-        font-style: italic;
-        font-weight: bold;
-    }
-    li span{
-        cursor: pointer;
-    }
-    ol{
-        width: 500px;
-        list-style: none;
-        -webkit-margin-before: 0px;
-
-    }
-    li{
-        margin-bottom: 10px;
-        padding: 4px;
-        border : 1px solid gray;
-        background-color: #e7e7e7;
-        border-radius: 5px;
-    }
-</style>
-
 <h1>Bug Tracker</h1>
 <hr>
 <section class="content">
-    <section class="stats">
-        <span class="closed">2</span>
+    <bug-stats [data]="bugs"></bug-stats>
+    <!--<section class="stats">-->
+        <!--<span class="closed">{{getClosedCount()}}</span>
         <span> / </span>
         <span>{{bugs.length}}</span>
-    </section>
+        </section>-->
     <section class="sort">
         <label for="">Order By :</label>
-        <input type="text" name="" id="">
+        <input type="text" [(ngModel)]="sortBugBy">
         <label for="">Descending? : </label>
-        <input type="checkbox" name="" id="">
+        <input type="checkbox" [(ngModel)]="sortBugOrder">
     </section>
     <section class="edit">
         <label for="">Bug :</label>
@@ -50,11 +20,13 @@
     </section>
     <section class="list">
         <ol>
-            <li *ngFor = "let bug of bugs">
-                <span class="bugname">{{bug.name}}</span>
-                <div class="datetime">{{bug.createdAt}}</div>
+            <!--Sorting bugs based on combination of name,isClosed and order-->
+            <li *ngFor = "let bug of (bugs|sort:sortBugBy:sortBugOrder)">
+                <!--<span class="bugname" (click)="toggle(bug)" [ngClass]="{closed:bug.isClosed}">{{bug.name}}</span>
+                <div class="datetime">{{bug.createdAt}}</div>-->
+                <bug-item [data]="bug"></bug-item>
             </li>
         </ol>
-        <input type="button" value="Remove Closed">
+        <input type="button" value="Remove Closed" (click)="removeClosed()">
     </section>
 </section>
