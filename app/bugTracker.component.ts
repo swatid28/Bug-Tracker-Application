@@ -1,44 +1,31 @@
 import {Component} from '@angular/core'
-import { Bug } from './Bug';
+import {Bug} from './Bug';
+import {BugOperations} from './BugTracker/BugOperations';
 
 @Component({
-   templateUrl : 'app/bugTracker.template.html',
+    templateUrl : 'app/bugTracker.template.html',
     selector : 'bug-tracker'
 })
-export class BugTrackerComponent{
-   //listBugs : BugTracker = new BugTracker();
-   bugs : Array<Bug> =[];
-   newBugName : string = '';
-  
-   addNew(){
-    var newBug = {
-       name: this.newBugName,
-       isClosed : false,
-       createdAt : new Date()
-    };
-    //this.bugs.push(newBug);
-    this.bugs = this.bugs.concat([newBug]);
-   }
+export class BugTracker{
+    bugs : Array<Bug> = [];
    
-//    toggle(bug:Bug){
-//        bug.isClosed = !bug.isClosed;
-//    }
+    //bugOperations : BugOperations = new BugOperations();
+
+    constructor(private _bugOperations : BugOperations){
+
+    }
+
+    addNew(newBugName:string){
+        var newBug = this._bugOperations.createNew(newBugName)
+        this.bugs = this.bugs.concat([newBug]);
+    }
 
     removeClosed(){
-        for(let i=this.bugs.length-1;i>=0;i--){
-            if(this.bugs[i].isClosed){
+        for(let i=this.bugs.length-1; i >= 0; i--){
+            if (this.bugs[i].isClosed)
                 this.bugs.splice(i,1);
-            }
-        }       
+        }
     }
-//moved this to bug-stats component
-//    getClosedCount(){
-//        let closedCount = 0;
-//        for(let i=0;i < this.bugs.length;i++){
-//            if(this.bugs[i].isClosed){
-//                ++closedCount;
-//                return closedCount;
-//            }
-//        }   
-//    }
+
+   
 }

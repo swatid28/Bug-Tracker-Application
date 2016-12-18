@@ -9,14 +9,18 @@
         </section>-->
     <section class="sort">
         <label for="">Order By :</label>
-        <input type="text" [(ngModel)]="sortBugBy">
+        <!--<input type="text" [(ngModel)]="sortBugBy">-->
+        <select [(ngModel)]="sortBugBy">
+            <option value="name">Name</option>
+            <option value="isClosed">isClosed</option>
+        </select>
         <label for="">Descending? : </label>
         <input type="checkbox" [(ngModel)]="sortBugOrder">
     </section>
     <section class="edit">
         <label for="">Bug :</label>
         <input type="text" [(ngModel)]="newBugName">
-        <input type="button" value="Add New" (click)='addNew()'>
+        <input type="button" value="Add New" (click)='addNew(newBugName)'>
     </section>
     <section class="list">
         <ol>
